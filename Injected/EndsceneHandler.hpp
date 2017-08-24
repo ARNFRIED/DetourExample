@@ -15,7 +15,7 @@ int __fastcall EndSceneDetour(int s_device, int edx)	//is a __thiscall
 {
 	if (*(int*)(s_device + 0x3864))
 	{
-		if (std::string((const char*)0x00C07CD0) == "login" && GetAsyncKeyState(0x4C))	//L
+		if (std::string((const char*)0x00C07CD0) == "login" && GetAsyncKeyState(0x4C))	//press 'L' for login
 		{
 			
 			printf("logging...\n");
@@ -24,7 +24,7 @@ int __fastcall EndSceneDetour(int s_device, int edx)	//is a __thiscall
 			((void(__cdecl*)(const char*, const char*))0x0046E560)(user, pass);	//CGlueMgr::DefaultServerLogin				
 		}
 		
-		if(std::string((const char*)0x00C07CD0) == "charselect" && GetAsyncKeyState(0x45))	//E
+		if(std::string((const char*)0x00C07CD0) == "charselect" && GetAsyncKeyState(0x45))	//press 'E' for enter world
 		{	
 			printf("enter world...\n");
 			((void(__cdecl*)())0x0046F460)();		//CGlueMgr::EnterWorld()			
