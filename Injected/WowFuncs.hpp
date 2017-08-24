@@ -1,7 +1,7 @@
 #pragma once
 #include <algorithm>
 
-using uint64 = long long;
+using uint64 = unsigned long long;
 
 inline auto ClientConnection() { return *(int*)0x00D43318; }
 
