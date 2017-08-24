@@ -7,7 +7,7 @@
 int __fastcall NetClientProcessDetour(int connection, int edx, int tickCount, CDataStore* data)
 {
 	auto ds = DataStore(data);
-	auto opcode = ds.ReadFake<unsigned short>();
+	auto opcode = ds.Peek<unsigned short>();
 
 	if (opcode == SMSG_ATTACKSTART)
 	{

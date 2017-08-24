@@ -51,7 +51,7 @@ public:
 	}
 
 	template<typename T>
-	T ReadFake()
+	T Peek()
 	{
 		T result = *(T*)(pointer->buffer + pointer->readed);
 		fake_readed += sizeof(T);

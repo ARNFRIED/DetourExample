@@ -19,8 +19,8 @@ int __fastcall EndSceneDetour(int s_device, int edx)	//is a __thiscall
 		{
 			
 			printf("logging...\n");
-			const char user[]{ "moka118" };
-			const char pass[]{ "opopop" };
+			const char user[]{ "user" };
+			const char pass[]{ "pass" };
 			((void(__cdecl*)(const char*, const char*))0x0046E560)(user, pass);	//CGlueMgr::DefaultServerLogin				
 		}
 		
