@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DllMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Util">
+      <UniqueIdentifier>{06d7a7db-d81d-4665-b59e-54372ce8aecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{2927ea73-97c3-4227-af52-c9e34d9df475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wow">
+      <UniqueIdentifier>{47b27175-412c-42a2-bd65-767cee8ae153}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EndsceneHandler.hpp" />
+    <ClInclude Include="Detour.hpp">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsConsole.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDetours.hpp" />
+    <ClInclude Include="CDataStore.hpp">
+      <Filter>Wow</Filter>
+    </ClInclude>
+    <ClInclude Include="WowFuncs.hpp">
+      <Filter>Wow</Filter>
+    </ClInclude>
+    <ClInclude Include="Opcodes.h">
+      <Filter>Wow</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
