@@ -47,7 +47,10 @@ public:
 	decltype(auto) Call(Args... args)
 	{
 		Restore();
+		DWORD dummy;
+		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		auto ret = ((T*)target)(args...);
+		VirtualProtect(target, 6, old_protection, &dummy);
 		Apply();
 		return ret;
 	}
