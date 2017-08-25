@@ -14,10 +14,9 @@ public:
 		new_bytes.push_back(0xc3);				// return
 
 		original_bytes.resize(6);
-		DWORD dummy;
 		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		memcpy(original_bytes.data(), target, 6);
-		VirtualProtect(target, 6, old_protection, &dummy);
+		VirtualProtect(target, 6, old_protection, &dummy_protection);
 
 		Apply();
 	}
@@ -28,29 +27,26 @@ public:
 	}
 
 	void Apply()
-	{
-		DWORD dummy;
+	{		
 		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		memcpy(target, new_bytes.data(), 6);
-		VirtualProtect(target, 6, old_protection, &dummy);
+		VirtualProtect(target, 6, old_protection, &dummy_protection);
 	}
 
 	void Restore()
 	{
-		DWORD dummy;
 		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		memcpy(target, original_bytes.data(), 6);
-		VirtualProtect(target, 6, old_protection, &dummy);
+		VirtualProtect(target, 6, old_protection, &dummy_protection);
 	}
 
 	template<typename T, typename... Args >
 	decltype(auto) Call(Args... args)
 	{
 		Restore();
-		DWORD dummy;
 		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		auto ret = ((T*)target)(args...);
-		VirtualProtect(target, 6, old_protection, &dummy);
+		VirtualProtect(target, 6, old_protection, &dummy_protection);
 		Apply();
 		return ret;
 	}
@@ -61,4 +57,5 @@ public:
 private:
 	int hook{};
 	DWORD old_protection;
+	DWORD dummy_protection;
 };
