@@ -14,10 +14,7 @@ public:
 		new_bytes.push_back(0xc3);				// return
 
 		original_bytes.resize(6);
-		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
-		memcpy(original_bytes.data(), target, 6);
-		VirtualProtect(target, 6, old_protection, &dummy_protection);
-
+		MemCpyProtect(original_bytes.data(), target, 6);
 		Apply();
 	}
 
@@ -27,17 +24,13 @@ public:
 	}
 
 	void Apply()
-	{		
-		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
-		memcpy(target, new_bytes.data(), 6);
-		VirtualProtect(target, 6, old_protection, &dummy_protection);
+	{	
+		MemCpyProtect(target, new_bytes.data(), 6);
 	}
 
 	void Restore()
 	{
-		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
-		memcpy(target, original_bytes.data(), 6);
-		VirtualProtect(target, 6, old_protection, &dummy_protection);
+		MemCpyProtect(target, original_bytes.data(), 6);
 	}
 
 	template<typename T, typename... Args >
@@ -46,9 +39,16 @@ public:
 		Restore();
 		VirtualProtect(target, 6, PAGE_EXECUTE_READWRITE, &old_protection);
 		auto ret = ((T*)target)(args...);
-		VirtualProtect(target, 6, old_protection, &dummy_protection);
+		VirtualProtect(target, 6, old_protection, 0);
 		Apply();
 		return ret;
+	}
+
+	void MemCpyProtect(byte* dest, byte* source, int lenght)
+	{		
+		VirtualProtect(dest, lenght, PAGE_EXECUTE_READWRITE, &old_protection);
+		memcpy(dest, source, lenght);
+		VirtualProtect(dest, lenght, old_protection, 0);
 	}
 
 	std::vector<byte> original_bytes{};
@@ -57,5 +57,4 @@ public:
 private:
 	int hook{};
 	DWORD old_protection;
-	DWORD dummy_protection;
 };
