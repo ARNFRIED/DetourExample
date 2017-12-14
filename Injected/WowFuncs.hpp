@@ -28,7 +28,7 @@ inline auto FramescriptExecute(const char* text)
 	((void(__cdecl*)(const char*, const char*, int))0x00706C80)(text, text, 0);
 }
 
-inline auto chat(std::string message)
+inline auto chat(const std::string& message)
 {
 	if (!GetLocalPlayer())
 		return;
@@ -42,8 +42,7 @@ inline auto chat(std::string message)
 
 	strftime(buffer, 80, "[%H:%M:%S] ", &timeinfo);
 
-	std::string taggedMessage = buffer + message;
-	std::replace(taggedMessage.begin(), taggedMessage.end(), '\'', '_');
-	std::string to_print = "DEFAULT_CHAT_FRAME:AddMessage('" + taggedMessage + "')";
+	auto taggedMessage = buffer + message;
+	auto to_print = "DEFAULT_CHAT_FRAME:AddMessage(\"" + taggedMessage + "\")";
 	FramescriptExecute(to_print.c_str());
 }
